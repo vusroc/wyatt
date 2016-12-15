@@ -1,94 +1,35 @@
 {
-  "$schema": "http://json-schema.org/schema#",
-  "id": "https://schema.management.azure.com/schemas/0.0.1-preview/CreateUIDefinition.MultiVm.json#",
-  "type": "object",
-  "properties": {
-    "handler": {
-      "type": "string",
-      "enum": [
-        "Microsoft.Compute.MultiVm"
-      ]
-    },
-    "version": {
-      "type": "string",
-      "enum": [
-        "0.0.1-preview"
-      ]
-    },
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "basics": {
-          "type": "array",
-          "items": {
-            "$ref": "CreateUIDefinition.CommonControl.json#"
-          }
-        },
-        "steps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "label": {
-                "type": "string"
-              },
-              "subLabel": {
-                "type": "object",
-                "properties": {
-                  "preValidation": {
-                    "type": "string"
-                  },
-                  "postValidation": {
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false,
-                "required": [
-                  "preValidation",
-                  "postValidation"
-                ]
-              },
-              "bladeTitle": {
-                "type": "string"
-              },
-              "bladeSubtitle": {
-                "type": "string"
-              },
-              "elements": {
-                "type": "array",
-                "items": {
-                  "$ref": "CreateUIDefinition.ProviderControl.json#"
-                }
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "name",
-              "label",
-              "subLabel",
-              "bladeTitle",
-              "elements"
-            ]
-          }
-        },
-        "outputs": {
-          "type": "object"
-        }
+  "handler": "Microsoft.Compute.MultiVm",
+  "version": "0.0.1-preview",
+  "parameters": {
+    "basics": [
+      {
+        "name": "adminUsername",
+        "type": "Microsoft.Compute.UserNameTextBox",
+        "label": "Username",
+        "toolTip": "Admin username for the virtual machines.",
+        "osPlatform": "Linux"
       },
-      "additionalProperties": false,
-      "required": [
-        "basics",
-        "steps",
-        "outputs"
-      ]
-    }
-  },
-  "required": [
-    "handler",
-    "version",
-    "parameters"
-  ]
+      {
+        "name": "vmPassword",
+        "type": "Microsoft.Common.PasswordBox",
+        "label": {
+          "password": "VM user password",
+          "confirmPassword": "Confirm password"
+        },
+        "toolTip": "",
+        "constraints": {
+          "required": true,
+          "regex": "^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])|(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])|(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])|(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])).{6,72}$",
+          "validationMessage": "Password must be at least 6 characters long and have 3 out of the following: one number, one lower case, one upper case, or one special character"
+        },
+        "options": {
+          "hideConfirmation": false
+        }
+      }
+    ],
+    "steps": [],
+    "outputs": {}
+  }
 }
+
